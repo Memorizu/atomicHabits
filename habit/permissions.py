@@ -11,4 +11,3 @@ class IsOwner(BasePermission):
 class IsPublic(BasePermission):
     def has_permission(self, request, view):
         return Habit.objects.filter(is_public=True).exists()
-

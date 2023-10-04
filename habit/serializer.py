@@ -1,15 +1,16 @@
-import os
-
 from rest_framework import serializers
 
 from habit.models import Habit
-from habit.validators import RelatedOrRewardValidator, TimeToCompleteValidator, IsPleasantRelatedValidator, \
-    IsPleasantValidator
+from habit.validators import RelatedOrRewardValidator, TimeToCompleteValidator, \
+    IsPleasantRelatedValidator, IsPleasantValidator
 
 
 class HabitSerializer(serializers.ModelSerializer):
     owner = serializers.HiddenField(default=serializers.CurrentUserDefault())
-    related_habit = serializers.PrimaryKeyRelatedField(queryset=Habit.objects.all(), validators=[IsPleasantRelatedValidator()], required=False)
+    related_habit = serializers.PrimaryKeyRelatedField(
+        queryset=Habit.objects.all(),
+        validators=[IsPleasantRelatedValidator()],
+        required=False)
     time_to_complete = serializers.DateTimeField(validators=[TimeToCompleteValidator()])
 
     class Meta:
