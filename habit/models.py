@@ -14,7 +14,7 @@ class Habit(models.Model):
     lead_time = models.DateTimeField(verbose_name='lead_time')
     action = models.TextField(verbose_name='action')
     is_pleasant = models.BooleanField(verbose_name='is_pleasant', default=True)
-    related_habit =  models.ForeignKey('self', **NULLABLE, on_delete=models.SET_NULL, verbose_name='related_habit')
+    related_habit = models.ForeignKey('self', **NULLABLE, on_delete=models.SET_NULL, verbose_name='related_habit')
     frequency = models.CharField(
         max_length=50,
         choices=Frequency.choices,
