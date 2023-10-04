@@ -44,9 +44,11 @@ INSTALLED_APPS = [
 
     'rest_framework',
     'rest_framework_simplejwt',
+    'django_celery_beat',
 
     'users.apps.UsersConfig',
-    'habit.apps.HabitConfig'
+    'habit.apps.HabitConfig',
+    'bots.apps.BotsConfig',
 ]
 
 MIDDLEWARE = [
@@ -182,3 +184,12 @@ CELERY_TASK_TRACK_STARTED = True
 CELERY_TASK_TIME_LIMIT = 30 * 60
 
 
+TELEGRAM_TOKEN = os.getenv('TELEGRAM_TOKEN')
+
+
+CELERY_BEAT_SCHEDULE = {
+    'send_notification': {
+        'task': 'habit.tasks.send_notification',
+        'schedule': timedelta(minutes=1),
+    },
+}

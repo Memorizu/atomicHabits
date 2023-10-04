@@ -54,6 +54,6 @@ class IsPleasantValidator:
         related_habit = value.get('related_habit', None)
         reward = value.get('reward', None)
 
-        if value:
+        if value.get('is_pleasant'):
             if related_habit or reward:
                 raise serializers.ValidationError("You cant set reward or related_habit on pleasant habit")

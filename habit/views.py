@@ -1,9 +1,10 @@
-from rest_framework import viewsets, status
+from rest_framework import viewsets, status, generics
 from rest_framework.permissions import IsAuthenticated
 
 
 from habit.models import Habit
 from habit.pagination import HabitPaginator
+from habit.permissions import IsOwner, IsPublic
 from habit.serializer import HabitSerializer
 
 
@@ -11,12 +12,22 @@ from habit.serializer import HabitSerializer
 class HabitViewSet(viewsets.ModelViewSet):
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer
-    permission_classes = [IsAuthenticated]
     pagination_class = HabitPaginator
 
-    # def create(self, request, *args, **kwargs):
-    #     serializer = self.get_serializer(data=request.data)
-    #     if serializer.is_valid():
-    #         serializer.save()
-    #         return Response(serializer.data, status=status.HTTP_201_CREATED)
-    #     return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+    def get_permissions(self):
+        match self.action:
+            case 'update', 'partial_update', 'destroy':
+                return [IsAuthenticated(), IsOwner()]
+            case _:
+                return [IsAuthenticated()]
+
+    # def get_queryset(self):
+    #     if self.action == 'list':
+    #         return Habit.objects.filter(is_public=True)
+    #     return Habit.objects.all()
+
+
+class PublicHabitListAPIView(generics.ListAPIView):
+    queryset = Habit.objects.filter(is_public=True)
+    permission_classes = [IsAuthenticated]
+    serializer_class = HabitSerializer
