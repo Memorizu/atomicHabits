@@ -1,14 +1,12 @@
 from rest_framework import viewsets, generics
 from rest_framework.permissions import IsAuthenticated
 
-
 from habit.models import Habit
 from habit.pagination import HabitPaginator
 from habit.permissions import IsOwner
 from habit.serializer import HabitSerializer
 
 
-# Create your views here.
 class HabitViewSet(viewsets.ModelViewSet):
     queryset = Habit.objects.all()
     serializer_class = HabitSerializer

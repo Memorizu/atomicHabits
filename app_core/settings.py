@@ -174,7 +174,7 @@ CSRF_TRUSTED_ORIGINS = [
 CELERY_BROKER_URL = 'redis://localhost:6379'
 
 # URL-адрес брокера результатов, также Redis
-CELERY_RESULT_BACKEND = 'redis://localhost:6379'
+CELERY_RESULT_BACKEND = os.getenv('REDIS_RESULT_BACKEND')
 
 # Часовой пояс для работы Celery
 CELERY_TIMEZONE = 'UTC'
