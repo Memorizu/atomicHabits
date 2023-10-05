@@ -29,14 +29,9 @@ class UserTestCase(BaseTestCase):
         )
         user.set_password('test')
         user.save()
-        print(user.password)
-        print(self.user_data)
         user_token = reverse('user:token')
         token_response = self.client.post(user_token, data=self.user_data, format='json')
-        print(token_response.json())
-        token = token_response.json().get('access')
-        # self.client.credentials(HTTP_AUTHORIZATION=f'Bearer {token}')
-        # self.headers = {'HTTP_AUTHORIZATION': f'Bearer {token}'}
+
         self.assertEqual(token_response.status_code, status.HTTP_200_OK)
 
     def test_refresh_token(self):

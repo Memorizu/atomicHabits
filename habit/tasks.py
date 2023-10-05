@@ -1,4 +1,4 @@
-from datetime import timedelta, datetime
+from datetime import timedelta
 
 from celery import shared_task
 from django.utils import timezone
@@ -6,7 +6,6 @@ from django.utils import timezone
 from bots.telegram_bot import bot
 from habit.models import Habit
 from habit.services import calculate_next_send_time
-from users.models import User
 
 
 @shared_task

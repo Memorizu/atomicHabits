@@ -19,4 +19,3 @@ class Command(BaseCommand):
 
         admin.set_password(os.getenv('ADMIN_PASSWORD'))
         admin.save()
-
