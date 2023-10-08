@@ -10,6 +10,16 @@ from habit.services import calculate_next_send_time
 
 @shared_task
 def send_notification():
+    """
+    Celery task to send habit notifications to users.
+
+    This task runs periodically and checks the habits of users with associated chat IDs.
+    If the lead time for a habit is overdue by more than 5 minutes, a notification message
+    is sent to the user reminding them to perform the habit.
+
+    The lead time of updated habits is adjusted, and the habit objects are bulk updated.
+
+    """
     now_time = timezone.now() + timedelta(hours=3)
 
     habits_with_users = Habit.objects.filter(owner__chat_id__isnull=False).prefetch_related('owner')

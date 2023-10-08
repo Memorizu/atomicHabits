@@ -6,6 +6,9 @@ from users.models import User
 
 
 class Command(BaseCommand):
+    """
+    Command for creating a new superuser
+    """
     help = 'Create super_user'
 
     def handle(self, *args, **kwargs):
